@@ -1,3 +1,4 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
@@ -9,4 +10,6 @@ Rails.application.routes.draw do
       post 'users/changepassword', to: 'users#change_password'
     end
   end
+
+  mount Sidekiq::Web => '/sidekiq'
 end

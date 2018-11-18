@@ -30,6 +30,10 @@ gem 'bcrypt', '~> 3.1', '>= 3.1.12'
 gem 'dotenv-rails', '~> 2.5'
 gem 'jwt', '~> 2.1'
 gem 'rack-cors', '~> 1.0', '>= 1.0.2'
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'redis'
+gem 'redis-namespace'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
