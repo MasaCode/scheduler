@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :record do
-    start_at { default_start_at }
-    end_at { default_end_at }
-    record_date { default_record_date }
+    sequence(:start_at) { |i| default_start_at + (i - 1).day }
+    sequence(:end_at) { |i| default_end_at + (i - 1).day }
+    sequence(:record_date) { |i| default_record_date + (i - 1).day }
     worked_hour { default_worked_hour }
     user { default_user }
 
