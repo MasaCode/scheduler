@@ -34,6 +34,7 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'redis'
 gem 'redis-namespace'
+gem 'whenever', :require => false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'

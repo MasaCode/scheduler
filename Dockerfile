@@ -1,5 +1,6 @@
 FROM ruby:2.5.0
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+RUN apt-get install -y cron
 
 ENV APP_HOME /scheduler
 
@@ -8,3 +9,5 @@ WORKDIR $APP_HOME
 ADD Gemfile $APP_HOME/Gemfile
 ADD Gemfile.lock $APP_HOME/Gemfile.lock
 ADD . $APP_HOME
+
+CMD ["cron", "-f"]
