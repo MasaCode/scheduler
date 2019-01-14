@@ -30,6 +30,7 @@ gem 'bcrypt', '~> 3.1', '>= 3.1.12'
 gem 'dotenv-rails', '~> 2.5'
 gem 'jwt', '~> 2.1'
 gem 'rack-cors', '~> 1.0', '>= 1.0.2'
+gem 'whenever', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
@@ -45,6 +46,14 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem "rspec-rails"
+
+  gem 'capistrano', '~> 3.11.0',         require: false
+  gem 'capistrano-rails', '~> 1.4.0',   require: false
+  gem 'capistrano-bundler', '~> 1.4.0', require: false
+  gem 'capistrano3-puma', '~> 3.1.1',  require: false
+  gem 'capistrano-rbenv', '~> 2.1.4',  require: false
+  gem 'sshkit-sudo', '~> 0.1.0', require: false
+  gem 'whenever', require: false
 end
 
 group :test do
