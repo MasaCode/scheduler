@@ -15,6 +15,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile
+    command: bundle exec rails s -p 4000 -b '0.0.0.0'
     volumes:
       - .:/var/www/scheduler
       - bundle_path:/var/www/scheduler/vendor/bundle
