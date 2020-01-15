@@ -10,6 +10,15 @@ class Api::V1::RecordsController < Api::V1::ApiController
     json_response(@record, :ok, Api::V1::RecordSerializer)
   end
 
+  def monthly
+    year, month = params[:month], params[:year]
+    unless validate_monthly_params(year, month)
+      return json_response({ message: Message.invalid_parameter(":year or :month") }, :bad_request)
+    end
+    pagy, records = pagy(Record.monthly(year, month))
+    json_response(records, :ok, Api::V1::RecordSerializer, pagination: pagy.vars)
+  end
+
   def start
     check_in_time = Record.calculate_time(check_in: true, period: current_user.check_in_period)
     @record = current_user.records.create!(start_at: check_in_time, record_date: Time.current)
@@ -70,5 +79,9 @@ class Api::V1::RecordsController < Api::V1::ApiController
       monthly_report = current_user.monthly_reports.create!(period_month: month, period_year: year, total_hour: 0, total_days: 0, average_hour: 0, data: [].to_json)
     end
     monthly_report
+  end
+
+  def validate_monthly_params(year, month)
+    (year.to_s =~ /(19|20)\d{2}/) != nil && (month.to_s =~ /^[0-9]$/) != nil && Array(1..12).include?(year.to_i)
   end
 end
