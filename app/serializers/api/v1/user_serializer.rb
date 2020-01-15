@@ -1,7 +1,7 @@
 module Api
   module V1
     class UserSerializer < Api::BaseSerializer
-      attributes :id, :name, :email, :target_hour, :check_in_period, :brewk_hour
+      attributes :id, :name, :email, :target_hour, :check_in_period, :break_hour
       has_many :records
       has_many :monthly_reports
 
