@@ -1,6 +1,6 @@
 class Record < ApplicationRecord
   belongs_to :user
-  scope :monthly, -> (year, month) { where("DATE_FORMAT(record_date, '%m%d') = #{year}#{month}") }
+  scope :monthly, -> (year, month) { where("DATE_FORMAT(record_date, '%Y%m') = ?", "#{year}#{month.to_s.rjust(2, '0')}") }
 
   def self.calculate_time(check_in: false, current: Time.current, period: 1)
     minutes = (current.min.to_f / period.to_f)

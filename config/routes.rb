@@ -13,6 +13,7 @@ Rails.application.routes.draw do
         collection do
           post :start, to: 'records#start'
           post :end, to: 'records#end'
+          get :monthly, to: 'records#monthly'
         end
       end
       resources :monthly_reports, only: [:index, :show] do

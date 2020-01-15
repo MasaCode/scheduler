@@ -11,8 +11,8 @@ class Api::V1::RecordsController < Api::V1::ApiController
   end
 
   def monthly
-    year, month = params[:month], params[:year]
-    unless validate_monthly_params(year, month)
+    year, month = params[:year], params[:month]
+    unless valid_monthly_params?(year, month)
       return json_response({ message: Message.invalid_parameter(":year or :month") }, :bad_request)
     end
     pagy, records = pagy(Record.monthly(year, month))
@@ -81,7 +81,7 @@ class Api::V1::RecordsController < Api::V1::ApiController
     monthly_report
   end
 
-  def validate_monthly_params(year, month)
-    (year.to_s =~ /(19|20)\d{2}/) != nil && (month.to_s =~ /^[0-9]$/) != nil && Array(1..12).include?(year.to_i)
+  def valid_monthly_params?(year, month)
+    (year.to_s =~ /(19|20)\d{2}/) != nil && (month.to_s =~ /^[0-9]$/) != nil && Array(1..12).include?(month.to_i)
   end
 end
