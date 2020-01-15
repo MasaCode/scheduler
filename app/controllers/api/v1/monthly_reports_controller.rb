@@ -1,7 +1,7 @@
 class Api::V1::MonthlyReportsController < Api::V1::ApiController
   def index
-    reports = current_user.monthly_reports
-    json_response(reports, :ok, Api::V1::MonthlyReportSerializer)
+    pagy, reports = pagy(current_user.monthly_reports)
+    json_response(reports, :ok, Api::V1::MonthlyReportSerializer, pagination: pagy.vars)
   end
 
   def show

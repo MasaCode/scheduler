@@ -2,6 +2,7 @@ class Api::V1::ApiController < ApplicationController
   include Response
   include ExceptionHandler
   include CustomValidationHelper
+  include Pagy::Backend
 
   attr_reader :current_user
   before_action :set_headers

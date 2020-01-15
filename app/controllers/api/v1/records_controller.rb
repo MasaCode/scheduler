@@ -2,8 +2,8 @@ class Api::V1::RecordsController < Api::V1::ApiController
   before_action :set_record, only: [:show, :update, :destroy, :end]
 
   def index
-    records = current_user.records
-    json_response(records, :ok, Api::V1::RecordSerializer)
+    pagy, records = pagy(current_user.records)
+    json_response(records, :ok, Api::V1::RecordSerializer, pagination: pagy.vars)
   end
 
   def show
