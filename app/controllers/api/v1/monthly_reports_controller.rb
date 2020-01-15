@@ -1,12 +1,12 @@
 class Api::V1::MonthlyReportsController < Api::V1::ApiController
   def index
     reports = current_user.monthly_reports
-    json_response({reports: reports})
+    json_response(reports, :ok, Api::V1::MonthlyReportSerializer)
   end
 
   def show
     report = current_user.monthly_reports.find(report_params[:id])
-    json_response({report: report})
+    json_response(report, :ok, Api::V1::MonthlyReportSerializer)
   end
 
   def recalculate
@@ -18,7 +18,7 @@ class Api::V1::MonthlyReportsController < Api::V1::ApiController
                                   .where("end_at IS NOT NULL")
                                   .order(record_date: :asc)
     report.recalculate_all(records)
-    json_response({report: report})
+    json_response(report, :ok, Api::V1::MonthlyReportSerializer)
   end
 
   private

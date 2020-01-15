@@ -3,17 +3,17 @@ class Api::V1::RecordsController < Api::V1::ApiController
 
   def index
     records = current_user.records
-    json_response({records: records})
+    json_response(records, :ok, Api::V1::RecordSerializer)
   end
 
   def show
-    json_response({record: @record})
+    json_response(@record, :ok, Api::V1::RecordSerializer)
   end
 
   def start
     check_in_time = Record.calculate_time(check_in: true, period: current_user.check_in_period)
     @record = current_user.records.create!(start_at: check_in_time, record_date: Time.current)
-    json_response({record: @record}, :created)
+    json_response(@record, :created, Api::V1::RecordSerializer)
   end
 
   def end
@@ -25,7 +25,7 @@ class Api::V1::RecordsController < Api::V1::ApiController
     @record.save!
 
     get_monthly_report.add_daily_report(@record)
-    json_response({record: @record})
+    json_response(@record, :ok, Api::V1::RecordSerializer)
   end
 
   def update
@@ -46,7 +46,7 @@ class Api::V1::RecordsController < Api::V1::ApiController
       monthly_report = get_monthly_report(time: time)
       monthly_report.recalculate_report(@record, previous_date)
     end
-    json_response({record: @record})
+    json_response(@record, :ok, Api::V1::RecordSerializer)
   end
 
   def destroy

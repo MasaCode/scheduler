@@ -4,13 +4,12 @@ class Api::V1::UsersController < Api::V1::ApiController
   def create
     user = User.create!(user_params)
     auth_token = AuthenticateUser.new(user.email, user.password).call
-    response = {message: Message.account_created, auth_token: auth_token, user: user.attributes.slice('id', 'email', 'name')}
-    json_response(response, :created)
+    json_response(user, :created, Api::V1::UserSerializer, { auth_token: auth_token })
   end
 
   def show
     user = User.select(['id', 'name', 'email', 'target_hour', 'check_in_period', 'break_hour']).find(current_user.id)
-    json_response({user: user}, :ok)
+    json_response(user, :ok, Api::V1::UserSerializer)
   end
 
   def update
@@ -24,7 +23,7 @@ class Api::V1::UsersController < Api::V1::ApiController
     current_user.check_in_period = update_params[:check_in_period].to_i if update_params[:check_in_period].present? && is_number?(update_params[:check_in_period])
     current_user.break_hour = update_params[:break_hour].to_i if update_params[:break_hour].present? && is_number?(update_params[:break_hour])
     current_user.save!
-    json_response({user: current_user.attributes.slice('id', 'name', 'email', 'target_hour', 'check_in_period', 'break_hour')}, :ok)
+    json_response(user, :ok, Api::V1::UserSerializer)
   end
 
   def change_password
